@@ -32,25 +32,6 @@ struct Plane {
     }
 };
 
-// Шаблон для правильно вычисления хэша случайно сгенерированной плоскости
-//namespace std {
-//template<>
-//class hash<Plane> {
-//public:
-//    size_t operator()(const Plane &plane) const
-//    {
-//        size_t h1 = std::hash<float>()(plane.a);
-//        size_t h2 = std::hash<float>()(plane.b);
-//        size_t h3 = std::hash<float>()(plane.c);
-//        size_t h4 = std::hash<float>()(plane.d);
-//        return h1 ^ (h2 << 1) ^ (h3 << 2) ^ (h4 << 3);
-//    }
-//};
-//}
-
-// Инициализация хэш генератора для плоскости
-// std::hash<Plane> PlaneHashFunction;
-
 void ReadPoints()
 {
     std::string line;
@@ -140,14 +121,6 @@ Plane createRandomPlane()
         if (normal_length < 1e-6)
             continue;
 
-//        // Генерация хэщ функции для случайно сгенерированной плоскости
-//        size_t randomPlaneHash = PlaneHashFunction(randomPlane);
-
-//        // Проверка, что сгенерированная плоскость уникальна (не была сгенерирована до этого)
-//        if (planeHashSet.find(randomPlaneHash) != planeHashSet.end())
-//            continue;
-
-//        planeHashSet.insert(randomPlaneHash);
         break;
     }
 
@@ -189,11 +162,6 @@ Plane CalculatePlane()
             // Генерация случайного индекса точки для проверки расстояния до неё
             uint16_t index = std::rand() % OriginPoints.size();
             // Проверка на дублирование точек
-//            if (std::find(distanceIndex.begin(), distanceIndex.end(), index) != distanceIndex.end())
-//                continue;
-//            else
-//                distanceIndex.push_back(index);
-            // Вычисление расстояния до выбранной точки и проверяем, что оно меньше допустимой величины
             if (fabs(candidatePlane.distance(OriginPoints[index])) < p) {
                 goodPoints++;
             }
